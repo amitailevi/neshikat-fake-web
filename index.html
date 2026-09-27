@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>נשיקת־פייק | בדיחה ב-AI, לא מציאות</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Rubik:wght@900&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg:#0b0b12; --pink:#ff4d8d; --gold:#f4c56a; --text:#f6f3ee; --muted:#a8a3b8; --line:#2a2a38; --ok:#3dd68c; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:Heebo,system-ui,sans-serif; background:radial-gradient(900px 500px at 80% -10%, rgba(255,77,141,.18), transparent 50%), var(--bg); color:var(--text); }
+    .wrap { max-width:980px; margin:0 auto; padding:28px 20px 80px; }
+    header { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; }
+    .logo { width:44px; height:44px; border-radius:14px; background:linear-gradient(135deg,var(--pink),#7a3cff); display:grid; place-items:center; font-weight:900; }
+    .brand { display:flex; gap:12px; align-items:center; font-weight:900; }
+    .badge { font-size:12px; color:var(--gold); border:1px solid #5a4a28; background:#221c12; padding:6px 10px; border-radius:999px; }
+    h1 { font-family:Rubik,Heebo,sans-serif; font-size:clamp(34px,6vw,64px); line-height:1.05; }
+    h1 span { color:#ff7ab0; }
+    .sub { color:var(--muted); font-size:20px; }
+    button { border:0; cursor:pointer; font-family:inherit; font-weight:700; padding:14px 22px; border-radius:14px; font-size:16px; }
+    .primary { background:linear-gradient(135deg,var(--pink),#ff2d75); color:#fff; }
+    .ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
+    .phone { background:#0e0e16; border-radius:28px; padding:16px; border:1px solid #333; min-height:380px; margin-top:24px; }
+    .drop { border:1.5px dashed #444; border-radius:16px; padding:22px; text-align:center; color:var(--muted); margin-bottom:12px; }
+    .check { display:flex; gap:10px; margin:10px 0; font-size:14px; }
+    .hidden { display:none; }
+    .result { position:relative; border-radius:16px; min-height:200px; display:grid; place-items:center; background:linear-gradient(160deg,#3a2040,#1a1428); }
+    .wm { position:absolute; inset:0; display:grid; place-items:center; font-weight:900; font-size:28px; color:rgba(255,255,255,.55); transform:rotate(-14deg); pointer-events:none; }
+    .ok { color:var(--ok); font-weight:700; }
+    footer { margin-top:48px; color:var(--muted); font-size:13px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><div class="logo">נ</div> נשיקת־פייק</div>
+      <div class="badge">AI GENERATED • לא אמיתי</div>
+    </header>
+    <h1>שתי תמונות.<br><span>נשיקה מזויפת.</span></h1>
+    <p class="sub">דמו בדיחה. הכל מסומן AI. אין החלפת פנים אמיתיות.</p>
+    <div class="phone" id="app">
+      <div id="s1">
+        <div class="drop">תמונה 1 — רק שלי / בהסכמה</div>
+        <div class="drop">תמונה 2 — רק שלי / בהסכמה</div>
+        <label class="check"><input type="checkbox" id="c1" /> אני בגיר/ה ויש הסכמה של כל מי שבתמונות.</label>
+        <label class="check"><input type="checkbox" id="c2" /> זה פייק לבדיחה. אסור להציג כאילו אמיתי.</label>
+        <button class="primary" style="width:100%" onclick="next()">המשך</button>
+      </div>
+      <div id="s2" class="hidden">
+        <p>רק סגנון מצויר</p>
+        <button class="primary" style="width:100%" onclick="showResult()">צור נשיקת-פייק</button>
+      </div>
+      <div id="s3" class="hidden">
+        <div class="result">
+          <div style="text-align:center"><div style="font-size:48px">💋</div><div class="ok">נוצר ב-AI</div></div>
+          <div class="wm">AI • לא אמיתי</div>
+        </div>
+        <button class="ghost" style="width:100%;margin-top:12px" onclick="resetApp()">התחל מחדש</button>
+      </div>
+    </div>
+    <footer>דמו מוצר. לא מחולל פנים אמיתי. לא ייעוץ משפטי.</footer>
+  </div>
+  <script>
+    function next(){ if(!c1.checked||!c2.checked){alert('צריך לאשר הסכמה.');return;} s1.classList.add('hidden'); s2.classList.remove('hidden'); }
+    function showResult(){ s2.classList.add('hidden'); s3.classList.remove('hidden'); }
+    function resetApp(){ s3.classList.add('hidden'); s1.classList.remove('hidden'); c1.checked=false; c2.checked=false; }
+  </script>
+</body>
+</html>
