@@ -3,67 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>נשיקת־פייק | בדיחה ב-AI, לא מציאות</title>
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Rubik:wght@900&display=swap" rel="stylesheet" />
+  <title>נשיקת־פייק | בדיחה ב-AI</title>
   <style>
-    :root { --bg:#0b0b12; --pink:#ff4d8d; --gold:#f4c56a; --text:#f6f3ee; --muted:#a8a3b8; --line:#2a2a38; --ok:#3dd68c; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family:Heebo,system-ui,sans-serif; background:radial-gradient(900px 500px at 80% -10%, rgba(255,77,141,.18), transparent 50%), var(--bg); color:var(--text); }
-    .wrap { max-width:980px; margin:0 auto; padding:28px 20px 80px; }
-    header { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; }
-    .logo { width:44px; height:44px; border-radius:14px; background:linear-gradient(135deg,var(--pink),#7a3cff); display:grid; place-items:center; font-weight:900; }
-    .brand { display:flex; gap:12px; align-items:center; font-weight:900; }
-    .badge { font-size:12px; color:var(--gold); border:1px solid #5a4a28; background:#221c12; padding:6px 10px; border-radius:999px; }
-    h1 { font-family:Rubik,Heebo,sans-serif; font-size:clamp(34px,6vw,64px); line-height:1.05; }
-    h1 span { color:#ff7ab0; }
-    .sub { color:var(--muted); font-size:20px; }
-    button { border:0; cursor:pointer; font-family:inherit; font-weight:700; padding:14px 22px; border-radius:14px; font-size:16px; }
+    :root { --bg:#09090f; --card:#14141e; --pink:#ff4d8d; --pink2:#ff8ab8; --gold:#f4c56a; --text:#f7f4ef; --muted:#9b96ab; --line:#2b2b38; --ok:#3dd68c; --err:#ff6b7a; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:"Segoe UI",Arial,sans-serif; background:radial-gradient(800px 420px at 100% -10%, rgba(255,77,141,.16), transparent 55%), var(--bg); color:var(--text); }
+    .wrap { max-width:680px; margin:0 auto; padding:22px 16px 72px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:26px; }
+    .brand { display:flex; gap:10px; align-items:center; font-weight:800; }
+    .logo { width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,var(--pink),#7a3cff); display:grid; place-items:center; font-weight:900; }
+    .badge { font-size:11px; color:var(--gold); border:1px solid #5a4a28; background:#1d1810; padding:6px 10px; border-radius:999px; }
+    h1 { font-size:clamp(28px,8vw,48px); line-height:1.12; margin:0 0 8px; }
+    h1 span { color:var(--pink2); }
+    .sub { color:var(--muted); margin:0 0 22px; }
+    .box { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:16px; }
+    .drops { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media (max-width:560px){ .drops{grid-template-columns:1fr;} }
+    .drop { border:1.5px dashed #3c3c4c; border-radius:16px; padding:14px; background:#101018; min-height:150px; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:var(--muted); position:relative; }
+    .drop.has { border-style:solid; border-color:#5a2d48; }
+    .drop img { width:72px; height:72px; border-radius:50%; object-fit:cover; margin-bottom:8px; }
+    .drop b { color:var(--text); font-size:14px; }
+    .drop span { font-size:12px; }
+    .drop input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+    .scenes { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+    .scene { width:auto; padding:8px 12px; border-radius:999px; background:#101018; color:#ddd; border:1px solid var(--line); font-size:13px; font-weight:700; }
+    .scene.on { background:linear-gradient(135deg,var(--pink),#ff2d75); color:#fff; border:0; }
+    .check { display:flex; gap:10px; align-items:flex-start; font-size:14px; margin:0 0 10px; cursor:pointer; }
+    .check input { width:18px; height:18px; margin-top:2px; }
+    button { border:0; cursor:pointer; font-weight:800; padding:14px 18px; border-radius:14px; font-size:16px; width:100%; font-family:inherit; }
     .primary { background:linear-gradient(135deg,var(--pink),#ff2d75); color:#fff; }
-    .ghost { background:transparent; color:var(--text); border:1px solid var(--line); }
-    .phone { background:#0e0e16; border-radius:28px; padding:16px; border:1px solid #333; min-height:380px; margin-top:24px; }
-    .drop { border:1.5px dashed #444; border-radius:16px; padding:22px; text-align:center; color:var(--muted); margin-bottom:12px; }
-    .check { display:flex; gap:10px; margin:10px 0; font-size:14px; }
-    .hidden { display:none; }
-    .result { position:relative; border-radius:16px; min-height:200px; display:grid; place-items:center; background:linear-gradient(160deg,#3a2040,#1a1428); }
-    .wm { position:absolute; inset:0; display:grid; place-items:center; font-weight:900; font-size:28px; color:rgba(255,255,255,.55); transform:rotate(-14deg); pointer-events:none; }
+    .ghost { background:transparent; color:var(--text); border:1px solid var(--line); margin-top:8px; }
+    button:disabled { opacity:.4; cursor:not-allowed; }
+    .hidden { display:none !important; }
+    .err { color:var(--err); font-size:13px; }
     .ok { color:var(--ok); font-weight:700; }
-    footer { margin-top:48px; color:var(--muted); font-size:13px; }
+    canvas { width:100%; height:auto; display:block; border-radius:16px; }
+    footer { margin-top:24px; color:var(--muted); font-size:12px; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
       <div class="brand"><div class="logo">נ</div> נשיקת־פייק</div>
-      <div class="badge">AI GENERATED • לא אמיתי</div>
+      <div class="badge">AI • לא אמיתי</div>
     </header>
-    <h1>שתי תמונות.<br><span>נשיקה מזויפת.</span></h1>
-    <p class="sub">דמו בדיחה. הכל מסומן AI. אין החלפת פנים אמיתיות.</p>
-    <div class="phone" id="app">
-      <div id="s1">
-        <div class="drop">תמונה 1 — רק שלי / בהסכמה</div>
-        <div class="drop">תמונה 2 — רק שלי / בהסכמה</div>
-        <label class="check"><input type="checkbox" id="c1" /> אני בגיר/ה ויש הסכמה של כל מי שבתמונות.</label>
-        <label class="check"><input type="checkbox" id="c2" /> זה פייק לבדיחה. אסור להציג כאילו אמיתי.</label>
-        <button class="primary" style="width:100%" onclick="next()">המשך</button>
+    <h1>שתי תמונות.<br><span>בדיחה מצוירת.</span></h1>
+    <p class="sub">בחר שתי תמונות מהמכשיר. הכל רץ אצלך. יש חותמת AI.</p>
+    <div class="box">
+      <div class="drops">
+        <label class="drop" id="d1">
+          <div id="p1">📷</div>
+          <b>תמונה ראשונה</b>
+          <span id="n1">לחץ להעלאה</span>
+          <input id="f1" type="file" accept="image/*" />
+        </label>
+        <label class="drop" id="d2">
+          <div id="p2">📷</div>
+          <b>תמונה שנייה</b>
+          <span id="n2">לחץ להעלאה</span>
+          <input id="f2" type="file" accept="image/*" />
+        </label>
       </div>
-      <div id="s2" class="hidden">
-        <p>רק סגנון מצויר</p>
-        <button class="primary" style="width:100%" onclick="showResult()">צור נשיקת-פייק</button>
+      <p style="font-weight:800;margin:12px 0 8px">בחר סצנה</p>
+      <div id="scenes" class="scenes">
+        <button type="button" class="scene on" data-s="park">סוחפת בפארק</button>
+        <button type="button" class="scene" data-s="kitchen">חפוזה במטבח</button>
+        <button type="button" class="scene" data-s="sunset">ארוכה בשקיעה</button>
+        <button type="button" class="scene" data-s="airport">שדה תעופה</button>
+        <button type="button" class="scene" data-s="first">פעם ראשונה</button>
       </div>
-      <div id="s3" class="hidden">
-        <div class="result">
-          <div style="text-align:center"><div style="font-size:48px">💋</div><div class="ok">נוצר ב-AI</div></div>
-          <div class="wm">AI • לא אמיתי</div>
-        </div>
-        <button class="ghost" style="width:100%;margin-top:12px" onclick="resetApp()">התחל מחדש</button>
+      <label class="check"><input id="c1" type="checkbox" /> אני בגיר/ה ויש הסכמה של כל מי שבתמונות.</label>
+      <label class="check"><input id="c2" type="checkbox" /> זה פייק לבדיחה. אסור להציג כאילו אמיתי.</label>
+      <button class="primary" id="go" disabled>צור נשיקת־פייק</button>
+      <p class="err" id="err"></p>
+      <div id="out" class="hidden" style="margin-top:16px">
+        <canvas id="cv" width="900" height="600"></canvas>
+        <p class="ok">נוצר אצלך במכשיר</p>
+        <button class="primary" id="dl">הורד עם סימון AI</button>
+        <button class="ghost" id="again">עוד ניסיון</button>
       </div>
     </div>
-    <footer>דמו מוצר. לא מחולל פנים אמיתי. לא ייעוץ משפטי.</footer>
+    <footer>דמו מקומי. לא החלפת פנים פוטו-ריאליסטית.</footer>
   </div>
   <script>
-    function next(){ if(!c1.checked||!c2.checked){alert('צריך לאשר הסכמה.');return;} s1.classList.add('hidden'); s2.classList.remove('hidden'); }
-    function showResult(){ s2.classList.add('hidden'); s3.classList.remove('hidden'); }
-    function resetApp(){ s3.classList.add('hidden'); s1.classList.remove('hidden'); c1.checked=false; c2.checked=false; }
+    const f1=document.getElementById('f1'), f2=document.getElementById('f2');
+    const c1=document.getElementById('c1'), c2=document.getElementById('c2');
+    const go=document.getElementById('go'), out=document.getElementById('out');
+    const err=document.getElementById('err'), cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+    let scene='park';
+    document.getElementById('scenes').onclick=e=>{
+      const b=e.target.closest('.scene'); if(!b) return;
+      scene=b.dataset.s;
+      document.querySelectorAll('.scene').forEach(x=>x.classList.toggle('on',x===b));
+    };
+    function ready(){ go.disabled=!(f1.files[0]&&f2.files[0]&&c1.checked&&c2.checked); }
+    function preview(input,drop,holder,nameEl){
+      const file=input.files[0]; if(!file) return;
+      if(!file.type.startsWith('image/')){ err.textContent='צריך תמונה.'; input.value=''; ready(); return; }
+      err.textContent='';
+      holder.innerHTML='<img alt="" src="'+URL.createObjectURL(file)+'">';
+      nameEl.textContent=file.name; drop.classList.add('has'); ready();
+    }
+    f1.onchange=()=>preview(f1,document.getElementById('d1'),document.getElementById('p1'),document.getElementById('n1'));
+    f2.onchange=()=>preview(f2,document.getElementById('d2'),document.getElementById('p2'),document.getElementById('n2'));
+    c1.onchange=ready; c2.onchange=ready;
+    function load(file){ return new Promise((res,rej)=>{ const img=new Image(); img.onload=()=>res(img); img.onerror=rej; img.src=URL.createObjectURL(file); }); }
+    function cover(img,x,y,w,h){
+      const ir=img.width/img.height,r=w/h; let sx,sy,sw,sh;
+      if(ir>r){ sh=img.height; sw=sh*r; sx=(img.width-sw)/2; sy=0; } else { sw=img.width; sh=sw/r; sx=0; sy=(img.height-sh)/2; }
+      ctx.save(); ctx.beginPath(); ctx.arc(x+w/2,y+h/2,Math.min(w,h)/2,0,Math.PI*2); ctx.clip();
+      ctx.drawImage(img,sx,sy,sw,sh,x,y,w,h); ctx.restore();
+      ctx.beginPath(); ctx.arc(x+w/2,y+h/2,Math.min(w,h)/2,0,Math.PI*2);
+      ctx.strokeStyle='rgba(255,255,255,.35)'; ctx.lineWidth=6; ctx.stroke();
+    }
+    go.onclick=async()=>{
+      if(!f1.files[0]||!f2.files[0]||!c1.checked||!c2.checked) return;
+      go.disabled=true; go.textContent='רגע...';
+      try{
+        const a=await load(f1.files[0]), b=await load(f2.files[0]);
+        const scenes={ park:{c0:'#17351f',c1:'#6aa86a',t:'נשיקה סוחפת בפארק'}, kitchen:{c0:'#3a2a1c',c1:'#d9a066',t:'נשיקה חפוזה במטבח'}, sunset:{c0:'#4a1d2a',c1:'#ff8a4a',t:'נשיקה ארוכה בשקיעה'}, airport:{c0:'#1a2740',c1:'#7aa0d6',t:'שדה תעופה · געגוע'}, first:{c0:'#2a1848',c1:'#ff7ab0',t:'פעם ראשונה'} };
+        const s=scenes[scene]||scenes.park;
+        const g=ctx.createLinearGradient(0,0,900,600); g.addColorStop(0,s.c0); g.addColorStop(1,s.c1);
+        ctx.fillStyle=g; ctx.fillRect(0,0,900,600);
+        cover(a,140,100,260,260); cover(b,500,100,260,260);
+        ctx.textAlign='center'; ctx.font='bold 64px Arial'; ctx.fillText('💋',450,270);
+        ctx.font='bold 22px Arial'; ctx.fillStyle='#fff'; ctx.fillText(s.t,450,500);
+        ctx.font='bold 26px Arial'; ctx.fillText('AI • לא אמיתי',450,540);
+        out.classList.remove('hidden');
+      } catch(e){ err.textContent='לא הצלחתי לקרוא תמונה.'; }
+      go.textContent='צור נשיקת־פייק'; ready();
+    };
+    document.getElementById('dl').onclick=()=>{ const a=document.createElement('a'); a.download='neshikat-fake.png'; a.href=cv.toDataURL(); a.click(); };
+    document.getElementById('again').onclick=()=>out.classList.add('hidden');
   </script>
 </body>
 </html>
